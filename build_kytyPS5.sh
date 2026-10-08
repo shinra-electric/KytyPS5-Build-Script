@@ -11,8 +11,14 @@ SCRIPT_DIR=${0:a:h}
 cd "$SCRIPT_DIR"
 
 set_vars() {
+	echo "setting vars"
+	if [ -d ~/Qt ]; then
+		Qt6_DIR=$(echo ~/Qt/6*/macos/lib/cmake/Qt6)
+		Qt6_VER=${Qt6_DIR#"$HOME/Qt/"}
+		Qt6_VER=${Qt6_VER%%/*}
+	fi
 	DEPS=( cmake ninja glslang )
-	Qt6_DIR="~/Qt/6.12.0/macos/lib/cmake/Qt6"
+	Qt6_DIR="~/Qt/$Qt6_VER/macos/lib/cmake/Qt6"
 	MVK_VERSION="1.4.2"
 	ICON_URL="https://s3-new.macosicons.com/macosicons/parse/PlayStation__Dark__sWaM0BYXEG_icns-20d69fe4b7.icns"
 }
@@ -20,9 +26,9 @@ set_vars() {
 introduction() {
 	echo "\n${PURPLE}This script is for compiling ${GREEN}KytyPS5${PURPLE}"
 	if [ ! -d ~/Qt ]; then
-		echo "\n${RED}Qt 6.12.0 has not been detected"
-		echo "\n${PURPLE}For this script to work, you must install the Univeral Binary version of Qt 6.12.0 to your home folder"
-		echo "\n${PURPLE}If you install to another location or use a version later than Qt 6.12.0 then update the 'Qt6_DIR' variable at the top of this script"
+		echo "\n${RED}Qt 6 has not been detected"
+		echo "\n${PURPLE}For this script to work, you must install the Univeral Binary version of Qt 6 to your home folder"
+		echo "\n${PURPLE}If you install to another location then update the 'Qt6_DIR' variable at the top of this script"
 		echo "\n${RED}The Homebrew version of Qt is Arm64-only and will not work"
 		echo "\n${PURPLE}Download Qt from:"
 		echo "${NC}https://www.qt.io/development/download-qt-installer-oss"
